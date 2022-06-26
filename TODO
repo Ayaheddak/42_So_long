@@ -1,0 +1,6 @@
+change map/img etc in params struct.
+
+pass params in every funtion that needs elemnts of it  (width and hieght)
+
+change mlx window creation and image creation with appropriate widdth and height instaed for hard coding numbers
+

@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   input_.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 21:43:39 by aheddak           #+#    #+#             */
-/*   Updated: 2022/04/21 07:35:40 by aheddak          ###   ########.fr       */
+/*   Created: 2022/06/12 23:50:33 by aheddak           #+#    #+#             */
+/*   Updated: 2022/06/25 08:11:37 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.c"
+#include "so_long.h"
 
-char	*ft_strdup(const char *s1)
-{
-	unsigned int	len;
-	unsigned int	i;
-	char			*p;
+// int key_pressed(int key,t_param *param)
+// {
+//     if (key == 53)
+//     {
+//         mlx_destroy_window(param->mlx_ptr, param->win_ptr);
+//         exit(0);
+//     }
+//     else
+//         printf("buttuns skhrs!\n");
+//     return (0);
+// }
 
-	i = 0;
-	len = ft_strlen(s1);
-	p = (char *)malloc((len + 1) * sizeof(char));
-	if (p == 0)
-		return (NULL);
-	while (i < len)
-	{
-		p[i] = s1[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
-}
+// int    ft_exit(void)
+// {
+//     exit(0);
+// }
