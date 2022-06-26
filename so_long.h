@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 05:00:50 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 07:31:15 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,30 @@
 # include	"get_next_line/get_next_line.h"
 # define    TILESIZE 64
 
+#define UPBUTTON 13
+#define DOWNBUTTON 1
+#define LEFTBUTTON 0
+#define RIGHTBUTTON 2
+
+
+typedef enum e_dirs
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	DEFAULT,
+}	t_dirs;
+
 typedef struct s_plyr
 {
 	int	xpos;
 	int	ypos;
+
+	t_dirs dir;
+	
 	int	collected;
-}				t_ply;
+}				t_plyr;
 
 typedef struct s_tex
 {
@@ -58,28 +76,32 @@ typedef struct s_param
 	t_tex	c_tex;
 	t_tex	e_tex;
 	t_tex	p_tex;
-	t_data	*img;
-	t_ply	*player;
+	t_data	img;
+	t_plyr	player;
+	char	*str;
 	char	**map;
 	int		height;
 	int		width;
+	int 	colcount;
 }		t_param;
 
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strln(const char *s);
 char	*ft_strdp(char *s1);
-void	draw_bg(t_data *data, char **map, t_param params);
-void	draw_map(t_data *data, char **map, t_param params);
+void	draw_bg(t_param *param);
+void	draw_map(t_param *param);
 void	draw_square(t_data *img, int x, int y, t_tex tex);
 int		ft_exit(void);
 int		key_pressed(int key, t_param *param);
 int		my_putstr(char *s);
-char	**get_map(char *map);
+//char	**get_map(t_param *param);
+void	get_map(t_param *param);
 char	*read_map(int fd, char *av);
 void	draw_square(t_data *img, int x, int y, t_tex tex);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	draw_bg(t_data *data, char **map, t_param params);
-void	draw_map(t_data *data, char **map, t_param params);
+
+
+int		get_rect(t_param *param);
 
 #endif

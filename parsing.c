@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:10:31 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 04:07:38 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 07:39:37 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,62 +26,61 @@ int	my_putstr(char *s)
 	}
 	return (1);
 }
-int	check_elem(char **str)
+int	check_elem(t_param *param)
 {
 	int	i;
 	int	j;
 	int	c_pyr;
-	int	c_col;
 	int	c_em_s;
 	int	c_wall;
 	int	c_exit;
-
+	
 	i = 0;
 	c_pyr = 0;
-	c_col = 0;
+	param->colcount = 0;
 	c_em_s = 0;
 	c_wall = 0;
 	c_exit = 0;
-	while (str[i])
+	while (param->map[i])
 	{
 		j = 0;
-		while (str[i][j])
+		while (param->map[i][j])
 		{
-			if (str[i][j] == 'P')
+			if (param->map[i][j] == 'P')
 				c_pyr++;
-			else if (str[i][j] == 'C')
-				c_col++;
-			else if (str[i][j] == 'E')
+			else if (param->map[i][j] == 'C')
+				param->colcount++;
+			else if (param->map[i][j] == 'E')
 				c_exit++;
-			else if (str[i][j] != '1' && str[i][j] != '0')
+			else if (param->map[i][j] != '1' && param->map[i][j] != '0')
 				return (1);
 			j++;
 		}
 		i++;
 	}
-	if (c_exit == 0 || c_col == 0 || c_pyr != 1)
+	if (c_exit == 0 || param->colcount == 0 || c_pyr != 1)
 		return (1);
 	return (0);
 }
 
-int	check_wall(char **map)
+int	check_wall(t_param *param)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (param->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (param->map[i][j])
 		{
-			if (map[0][j] != '1')
+			if (param->map[0][j] != '1')
 				return (1);
-			else if ((map[i + 1] == NULL && map[i][j] != '1'))
+			else if ((param->map[i + 1] == NULL && param->map[i][j] != '1'))
 				return (1);
-			else if (map[i][0] != '1')
+			else if (param->map[i][0] != '1')
 				return (1);
-			else if (map[i][j + 1] == '\0' && map[i][j] != '1')
+			else if (param->map[i][j + 1] == '\0' && param->map[i][j] != '1')
 				return (1);
 			j++;
 		}
@@ -89,8 +88,35 @@ int	check_wall(char **map)
 	}
 	return (0);
 }
+// int	get_rect(char **map, int nb)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	w;
+// 	int	tmp;
 
-int	get_rect(char **map, int nb)
+// 	i = 0;
+// 	tmp = 0;
+// 	while (map[i])
+// 	{
+// 		j = 0;
+// 		while (map[i][j])
+// 			j++;
+// 		tmp = j;
+// 		if (i == 0)
+// 			w = j;
+// 		if (w != tmp)
+// 			return (1); 
+// 		i++;
+// 	}
+// 	if (nb == 1)
+// 		return (i);
+// 	else if (nb == 2)
+// 		return (w);
+// 	else
+// 		return (0);
+// }
+int	get_rect(t_param *param)
 {
 	int	i;
 	int	j;
@@ -99,24 +125,21 @@ int	get_rect(char **map, int nb)
 
 	i = 0;
 	tmp = 0;
-	while (map[i])
+	while (param->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (param->map[i][j])
 			j++;
 		tmp = j;
 		if (i == 0)
 			w = j;
 		if (w != tmp)
-			return (1); 
+			return (1);
 		i++;
 	}
-	if (nb == 1)
-		return (i);
-	else if (nb == 2)
-		return (w);
-	else
-		return (0);
+	param->height = i;
+	param->width = tmp;
+	return (0);
 }
 
 int	ft_error(char *str)
@@ -182,23 +205,26 @@ char	*read_map(int fd, char *av)
 	return (map);
 }
 
-char	**get_map(char *map)
-{
-	char	**gmap;
-
-	gmap = ft_split(map, '\n');
-	if (check_elem(gmap) != 0 || check_wall(gmap) != 0 || get_rect(gmap, 3) != 0)
-		ft_error("Error 1\n");
-	return (gmap);
-}
-
-// int main(int ac , char *av[])
+// char	**get_map(t_param *param)
 // {
-//   int fd = open(av[1], O_RDWR);
-// 	//  
-// // if (fd == 0)
-// // 		ft_error("Error : no such file or directory\n");
-//   char **map;
-//   map = get_map(read_map(fd, av[1]));
-//   printf ("%s", map[3]);
+// 	param->map = ft_split(param->str, '\n');
+// 	if (check_elem(param->map, param) != 0 || check_wall(param->map) != 0 || get_rect(param) != 0)
+// 		ft_error("Error 1\n");
+// 	return (NULL);
 // }
+// void	get_map(t_param *param)
+// {
+// 	param->map = ft_split(param->str, '\n');
+// 	if (check_elem(param->map, param) != 0 || check_wall(param->map) != 0 || get_rect(param) != 0)
+// 		ft_error("Error 1\n");
+// 	//return (NULL);
+// }
+void	get_map(t_param *param)
+{
+	//char **gmap;
+	
+	param->map= ft_split(param->str, '\n');
+	if (check_elem(param) != 0 || check_wall(param) != 0 || get_rect(param) != 0)
+		ft_error("Error \n");
+	//return (NULL);
+}

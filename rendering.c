@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:36:51 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 05:06:38 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 06:06:53 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,53 +34,58 @@ void	draw_square(t_data *img, int x, int y, t_tex tex)
 		while (i < x +TILESIZE)
 		{
 			pos = ((j - y) * TILESIZE + (i - x));
-			my_mlx_pixel_put(img, i, j, tex.addr[pos]);
+			if (((tex.addr[pos] >> 24) & 0xFF) == 0x00)//
+				my_mlx_pixel_put(img, i, j, tex.addr[pos]);
 			i++;
 		}
 		j++;
 	}
 }
 
-void	draw_bg(t_data *data, char **map, t_param params)
+void	draw_bg(t_param *param)
 {
 	int	i;
 	int	j;
 
     i = 0;
-	while (map[i])
+	while (param->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (param->map[i][j])
 		{
-			if (map[i][j] != '0' && map[i][j] != '1')
-				draw_square(data, j * TILESIZE, i * TILESIZE, params.zero_tex);
+			if (param->map[i][j] != '0' && param->map[i][j] != '1')
+				draw_square(&param->img, j * TILESIZE, i * TILESIZE, param->zero_tex);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_map(t_data *data, char **map, t_param params)
+void	draw_map(t_param *param)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (param->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (param->map[i][j])
 		{
-			if (map[i][j] == '0')
-				draw_square(data , j * TILESIZE, i * TILESIZE, params.zero_tex);
-			else if (map[i][j] == '1')
-				draw_square(data , j * TILESIZE, i * TILESIZE, params.one_tex);
-			else if (map[i][j] == 'P')
-				draw_square(data , j * TILESIZE, i * TILESIZE, params.p_tex);
-			else if (map[i][j] == 'E')
-				draw_square(data , j * TILESIZE, i * TILESIZE, params.e_tex);
-			else if (map[i][j] == 'C')
-				draw_square(data , j * TILESIZE, i * TILESIZE, params.c_tex);
+			if (param->map[i][j] == '0')
+				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->zero_tex);
+			else if (param->map[i][j] == '1')
+				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->one_tex);
+			else 
+			{
+				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->zero_tex);
+				if (param->map[i][j] == 'P')
+					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->p_tex);
+				else if (param->map[i][j] == 'E')
+					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->e_tex);
+				else if (param->map[i][j] == 'C')
+					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->c_tex);
+			}
 			j++;
 		}
 		i++;

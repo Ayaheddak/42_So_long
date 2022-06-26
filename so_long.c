@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 22:00:44 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 05:06:56 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 07:38:53 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,37 +73,52 @@ void get_textures(t_param *params)
     params->p_tex.addr = ( int *)mlx_get_data_addr(params->p_tex.img, &params->p_tex.bits_per_pixel,
         &params->p_tex.line_length,&params->p_tex.endian);
 }
-
+int render_next_frame(t_param *param)
+{
+	mlx_hook(param->win_ptr, 2, 0, key_pressed, param);
+	mlx_hook(param->win_ptr, 17, 0, ft_exit, NULL);
+/*
+	gameplay logic
+	get key pressed
+	swap accordingly
+*/
+	//game(param);
+	draw_map(param);//rendering 
+	mlx_put_image_to_window(param->mlx_ptr, param->win_ptr, param->img.img, 0, 0);
+	return 0;
+}
 int main(int ac, char *av[])
 {
-    t_param param;
-    t_data  img;
-    char **map;
-    char *str;
-    int fd;
+	t_param	param;
 
-	if(ac != 2)
+	int		i = 0;
+	int		j;
+	int		fd;
+
+	if (ac != 2)
 	{
 		my_putstr("ERROR : Number of arguments\n");
 		exit(1);
 	}
-    fd = open(av[1], O_RDWR);
-    str = read_map(fd,av[1]);
-    map = get_map( str);
-    param.mlx_ptr = mlx_init();
-    param.win_ptr = mlx_new_window(param.mlx_ptr, 16 * TILESIZE, 5 * TILESIZE, "first try");//h * tilesize and l * tilesize
-    img.img = mlx_new_image(param.mlx_ptr,16*TILESIZE, 5*TILESIZE);
-    img.addr =  mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,&img.endian);// to get information related to the image
-    //img.bits_per_pixel == kayarf rir bits so khsu yearrf chhal mn bits kayn f dik pixeel
-    //&img.line_length hit howa kayerf rir 1d so kaychof rir tableau d 1D khsu yearf chhal lenghth loli
-    //img.endian wach pc kayqra mn loli lakhri or leaks
-    get_textures(&param);
-    // draw_map(&img, map, param);
-    draw_bg(&img, map, param);
-    mlx_put_image_to_window(param.mlx_ptr, param.win_ptr, img.img, 0, 0);//img.img f
-    draw_map(&img, map, param);
-	mlx_put_image_to_window(param.mlx_ptr, param.win_ptr, img.img, 0, 0);//img.img f
-    mlx_key_hook(param.win_ptr, key_pressed, &param);
-    mlx_hook(param.win_ptr, 17, 0, ft_exit, NULL);//
-    mlx_loop(param.mlx_ptr);
+	fd = open(av[1], O_RDWR);
+	param.str = read_map(fd, av[1]);
+	get_map(&param);
+	// while(param.map[i])
+	// {
+	// 	printf("%s\n", param.map[i]);
+	// 	i++;
+	// }
+	//param.width = get_rect(&param);
+	//param.height = get_rect(&param);
+	//printf("%d\n", param.width);
+	param.mlx_ptr = mlx_init();
+	param.win_ptr = mlx_new_window(param.mlx_ptr, param.width * TILESIZE, param.height * TILESIZE, "so_long");
+	
+	param.img.img = mlx_new_image(param.mlx_ptr, param.width * TILESIZE, param.height * TILESIZE);
+	param.img.addr = mlx_get_data_addr(param.img.img, &param.img.bits_per_pixel, &param.img.line_length, &param.img.endian);
+	get_textures(&param);
+
+
+	mlx_loop_hook(param.mlx_ptr, render_next_frame, &param);
+	mlx_loop(param.mlx_ptr);
 }
