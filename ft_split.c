@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 11:35:29 by aheddak           #+#    #+#             */
-/*   Updated: 2022/05/12 21:49:02 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 04:26:55 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,3 @@ char	**ft_split(char const *s, char c)
 	str = fill_array(str, s, c);
 	return (str);
 }
-// int main()
-// {
-// 	char **str;
-// 	str =ft_split("ayaaaa/fu,heddak/ayoyo,zerrouali/li",'/');
-// 	int i;
-// 	i = 0;
-// 	while(str[i])
-// 	{
-// 		printf("%s\n",str[i]);
-// 		i++;
-// 	}
-	
-// }
