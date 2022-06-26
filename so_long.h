@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 07:31:15 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 13:02:50 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,25 @@
 # include	<fcntl.h>
 # include	"get_next_line/get_next_line.h"
 # define    TILESIZE 64
+# define    UPBUTTON 13
+# define    DOWNBUTTON 1
+# define    LEFTBUTTON 0
+# define    RIGHTBUTTON 2
 
-#define UPBUTTON 13
-#define DOWNBUTTON 1
-#define LEFTBUTTON 0
-#define RIGHTBUTTON 2
-
-
-typedef enum e_dirs
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	DEFAULT,
-}	t_dirs;
+// typedef enum e_dirs
+// {
+// 	UP,
+// 	DOWN,
+// 	LEFT,
+// 	RIGHT,
+// 	DEFAULT,
+// }	t_dirs;
 
 typedef struct s_plyr
 {
 	int	xpos;
 	int	ypos;
-
-	t_dirs dir;
-	
+	//t_dirs	dir;
 	int	collected;
 }				t_plyr;
 
@@ -95,13 +91,14 @@ void	draw_square(t_data *img, int x, int y, t_tex tex);
 int		ft_exit(void);
 int		key_pressed(int key, t_param *param);
 int		my_putstr(char *s);
-//char	**get_map(t_param *param);
 void	get_map(t_param *param);
 char	*read_map(int fd, char *av);
 void	draw_square(t_data *img, int x, int y, t_tex tex);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-
-
+void	ft_move_ply_down(t_param *param);
+void	ft_move_ply_up(t_param *param);
 int		get_rect(t_param *param);
-
+void	ft_move_ply_right(t_param *param);
+void	ft_move_ply_left(t_param *param);
+void	pos_plyr(t_param *param, t_plyr *plyr);
 #endif

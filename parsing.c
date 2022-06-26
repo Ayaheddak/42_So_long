@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:10:31 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 07:39:37 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 07:40:46 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,10 +221,8 @@ char	*read_map(int fd, char *av)
 // }
 void	get_map(t_param *param)
 {
-	//char **gmap;
 	
 	param->map= ft_split(param->str, '\n');
 	if (check_elem(param) != 0 || check_wall(param) != 0 || get_rect(param) != 0)
 		ft_error("Error \n");
-	//return (NULL);
 }
