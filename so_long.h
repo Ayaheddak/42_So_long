@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 13:02:50 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 14:31:21 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_param
 	t_tex	e_tex;
 	t_tex	p_tex;
 	t_data	img;
-	t_plyr	player;
+	t_plyr	*player;
 	char	*str;
 	char	**map;
 	int		height;
@@ -100,5 +100,5 @@ void	ft_move_ply_up(t_param *param);
 int		get_rect(t_param *param);
 void	ft_move_ply_right(t_param *param);
 void	ft_move_ply_left(t_param *param);
-void	pos_plyr(t_param *param, t_plyr *plyr);
+void	pos_plyr(t_param *param);
 #endif

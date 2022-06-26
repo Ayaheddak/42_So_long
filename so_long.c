@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 22:00:44 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 13:06:26 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 15:12:52 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int render_next_frame(t_param *param)
 	//game(param);
 	draw_map(param);//rendering 
 	mlx_put_image_to_window(param->mlx_ptr, param->win_ptr, param->img.img, 0, 0);
+
 	return 0;
 }
 int main(int ac, char *av[])
@@ -64,22 +65,16 @@ int main(int ac, char *av[])
 		exit(1);
 	}
 	fd = open(av[1], O_RDWR);
+	param.player = malloc (sizeof(t_plyr));
 	param.str = read_map(fd, av[1]);
 	get_map(&param);
-	// while(param.map[i])
-	// {
-	// 	printf("%s\n", param.map[i]);
-	// 	i++;
-	// }
-	//param.width = get_rect(&param);
-	//param.height = get_rect(&param);
-	//printf("%d\n", param.width);
+	pos_plyr(&param);
 	param.mlx_ptr = mlx_init();
 	param.win_ptr = mlx_new_window(param.mlx_ptr, param.width * TILESIZE, param.height * TILESIZE, "so_long");
-	
 	param.img.img = mlx_new_image(param.mlx_ptr, param.width * TILESIZE, param.height * TILESIZE);
 	param.img.addr = mlx_get_data_addr(param.img.img, &param.img.bits_per_pixel, &param.img.line_length, &param.img.endian);
 	get_textures(&param);
 	mlx_loop_hook(param.mlx_ptr, render_next_frame, &param);
+	// printf("colcount---->%d\n", param.colcount);
 	mlx_loop(param.mlx_ptr);
 }

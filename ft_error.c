@@ -6,13 +6,13 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 09:39:34 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 13:05:38 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/26 15:12:44 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	pos_plyr(t_param *param, t_plyr *plyr)
+void	pos_plyr(t_param *param)
 {
 	int	i;
 	int	j;
@@ -25,8 +25,8 @@ void	pos_plyr(t_param *param, t_plyr *plyr)
 		{
 			if (param->map[i][j] == 'P')
 			{
-				plyr->xpos = i;
-				plyr->ypos = j;
+				param->player->xpos = j;
+				param->player->ypos = i;
 			}
 			j++;
 		}
@@ -39,20 +39,27 @@ void	ft_move_ply_left(t_param *param)
 	int	x;
 	int	y;
 
-	x = param->player.xpos;
-	y = param->player.ypos;
-	if (param->map[y][x-1] == '0' || param->map[y][x-1] == 'C')
+	x = param->player->xpos;
+	y = param->player->ypos;
+	if (param->map[y][x - 1] == '0' || param->map[y][x - 1] == 'C')
 	{
-		param->map[y][x - 1] = 'P';
-		param->map[y][x] = '0';
-		x--;
+		if (param->map[y][x - 1] == '0')
+		{
+			param->map[y][x - 1] = 'P';
+			param->map[y][x] = '0';
+		}
 		if (param->map[y][x - 1] == 'C')
+		{
+			param->map[y][x - 1] = 'P';
+			param->map[y][x] = '0';
 			param->colcount--;
+			mlx_clear_window(param->mlx_ptr, param->win_ptr);
+			draw_map(param);
+		}
+		param->player->xpos--;
 	}
 	if (param->colcount == 0 && param->map[y][x-1] == 'E')
-	{
 		exit(0);
-	}
 }
 
 void	ft_move_ply_right(t_param *param)
@@ -60,20 +67,27 @@ void	ft_move_ply_right(t_param *param)
 	int	x;
 	int	y;
 
-	x = param->player.xpos;
-	y = param->player.ypos;
+	x = param->player->xpos;
+	y = param->player->ypos;
 	if (param->map[y][x + 1] == '0' || param->map[y][x + 1] == 'C')
 	{
-		param->map[y][x + 1] = 'P';
-		param->map[y][x] = '0';
-		x++;
+		if (param->map[y][x + 1] == '0')
+		{
+			param->map[y][x + 1] = 'P';
+			param->map[y][x] = '0';
+		}
 		if (param->map[y][x + 1] == 'C')
+		{
+			param->map[y][x + 1] = 'P';
+			param->map[y][x] = '0';
 			param->colcount--;
+			mlx_clear_window(param->mlx_ptr, param->win_ptr);
+			draw_map(param);
+		}
+		param->player->xpos++;
 	}
 	if (param->colcount == 0 && param->map[y][x + 1] == 'E')
-	{
 		exit(0);
-	}
 }
 
 void	ft_move_ply_up(t_param *param)
@@ -81,20 +95,27 @@ void	ft_move_ply_up(t_param *param)
 	int	x;
 	int	y;
 
-	x = param->player.xpos;
-	y = param->player.ypos;
+	x = param->player->xpos;
+	y = param->player->ypos;
 	if (param->map[y - 1][x] == '0' || param->map[y - 1][x] == 'C')
 	{
-		param->map[y - 1][x] = 'P';
-		param->map[y][x] = '0';
-		y--;
+		if (param->map[y -1 ][x] == '0')
+		{
+			param->map[y - 1][x] = 'P';
+			param->map[y][x] = '0';
+		}
 		if (param->map[y - 1][x] == 'C')
+		{
+			param->map[y - 1][x ] = 'P';
+			param->map[y][x] = '0';
 			param->colcount--;
+			mlx_clear_window(param->mlx_ptr, param->win_ptr);
+			draw_map(param);
+		}
+		param->player->ypos--;
 	}
 	if (param->colcount == 0 && param->map[y - 1][x] == 'E')
-	{
 		exit(0);
-	}
 }
 
 void	ft_move_ply_down(t_param *param)
@@ -102,18 +123,25 @@ void	ft_move_ply_down(t_param *param)
 	int	x;
 	int	y;
 
-	x = param->player.xpos;
-	y = param->player.ypos;
-	if (param->map[y + 1][x] == '0' || param->map[y + 1][x] == 'C')
+	x = param->player->xpos;
+	y = param->player->ypos;
+	if (param->map[y  + 1][x] == '0' || param->map[y + 1][x] == 'C')
 	{
-		param->map[y + 1][x] = 'P';
-		param->map[y][x] = '0';
-		y++;
-		if (param->map[y + 1][x] == 'C')
+		if (param->map[y  + 1][x] == '0')
+		{
+			param->map[y + 1][x] = 'P';
+			param->map[y][x] = '0';
+		}
+		if (param->map[y  + 1][x] == 'C')
+		{
+			param->map[y + 1][x] = 'P';
+			param->map[y][x] = '0';
 			param->colcount--;
+			mlx_clear_window(param->mlx_ptr, param->win_ptr);
+			draw_map(param);
+		}
+		param->player->ypos++;
 	}
 	if (param->colcount == 0 && param->map[y + 1][x] == 'E')
-	{
 		exit(0);
-	}
 }
