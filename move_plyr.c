@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   move_plyr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 09:39:34 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 15:12:44 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 03:32:37 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ void	ft_move_ply_left(t_param *param)
 			param->map[y][x - 1] = 'P';
 			param->map[y][x] = '0';
 			param->colcount--;
-			mlx_clear_window(param->mlx_ptr, param->win_ptr);
-			draw_map(param);
 		}
 		param->player->xpos--;
 	}
-	if (param->colcount == 0 && param->map[y][x-1] == 'E')
+	if (param->colcount == 0 && param->map[y][x - 1] == 'E')
 		exit(0);
 }
 
@@ -81,8 +79,6 @@ void	ft_move_ply_right(t_param *param)
 			param->map[y][x + 1] = 'P';
 			param->map[y][x] = '0';
 			param->colcount--;
-			mlx_clear_window(param->mlx_ptr, param->win_ptr);
-			draw_map(param);
 		}
 		param->player->xpos++;
 	}
@@ -99,18 +95,16 @@ void	ft_move_ply_up(t_param *param)
 	y = param->player->ypos;
 	if (param->map[y - 1][x] == '0' || param->map[y - 1][x] == 'C')
 	{
-		if (param->map[y -1 ][x] == '0')
+		if (param->map[y -1][x] == '0')
 		{
 			param->map[y - 1][x] = 'P';
 			param->map[y][x] = '0';
 		}
 		if (param->map[y - 1][x] == 'C')
 		{
-			param->map[y - 1][x ] = 'P';
+			param->map[y - 1][x] = 'P';
 			param->map[y][x] = '0';
 			param->colcount--;
-			mlx_clear_window(param->mlx_ptr, param->win_ptr);
-			draw_map(param);
 		}
 		param->player->ypos--;
 	}
@@ -125,20 +119,18 @@ void	ft_move_ply_down(t_param *param)
 
 	x = param->player->xpos;
 	y = param->player->ypos;
-	if (param->map[y  + 1][x] == '0' || param->map[y + 1][x] == 'C')
+	if (param->map[y + 1][x] == '0' || param->map[y + 1][x] == 'C')
 	{
-		if (param->map[y  + 1][x] == '0')
+		if (param->map[y + 1][x] == '0')
 		{
 			param->map[y + 1][x] = 'P';
 			param->map[y][x] = '0';
 		}
-		if (param->map[y  + 1][x] == 'C')
+		if (param->map[y + 1][x] == 'C')
 		{
 			param->map[y + 1][x] = 'P';
 			param->map[y][x] = '0';
 			param->colcount--;
-			mlx_clear_window(param->mlx_ptr, param->win_ptr);
-			draw_map(param);
 		}
 		param->player->ypos++;
 	}

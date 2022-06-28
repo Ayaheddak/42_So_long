@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 14:31:21 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 04:55:32 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include	<sys/stat.h>
 # include	<fcntl.h>
 # include	"get_next_line/get_next_line.h"
-# define    TILESIZE 64
+# define    TS 64//tilesize
 # define    UPBUTTON 13
 # define    DOWNBUTTON 1
 # define    LEFTBUTTON 0
@@ -35,13 +35,19 @@
 // 	RIGHT,
 // 	DEFAULT,
 // }	t_dirs;
+typedef struct s_norm
+{
+	int	c_pyr;
+	int	c_em_s;
+	int	c_wall;
+	int	c_exit;
+}				t_norm;
 
 typedef struct s_plyr
 {
 	int	xpos;
 	int	ypos;
-	//t_dirs	dir;
-	int	collected;
+	int	move;
 }				t_plyr;
 
 typedef struct s_tex
@@ -78,7 +84,7 @@ typedef struct s_param
 	char	**map;
 	int		height;
 	int		width;
-	int 	colcount;
+	int		colcount;
 }		t_param;
 
 char	**ft_split(char const *s, char c);
@@ -101,4 +107,10 @@ int		get_rect(t_param *param);
 void	ft_move_ply_right(t_param *param);
 void	ft_move_ply_left(t_param *param);
 void	pos_plyr(t_param *param);
+void	init_map(t_param *param, char	**av);
+void	init_window(t_param *param);
+void	init_textures(t_param *params);
+int		ft_error(char *str);
+int		check_wall(t_param *param);
+int		check_elem(t_param *param);
 #endif

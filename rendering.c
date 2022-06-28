@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:36:51 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 06:06:53 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 04:38:57 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	draw_square(t_data *img, int x, int y, t_tex tex)
 {
-	int	i;
-	int	j;
+	int				i;
+	int				j;
 	unsigned int	pos;
 
 	i = x;
 	j = y;
-	while (j < y + TILESIZE)
+	while (j < y + TS)
 	{
 		i = x;
-		while (i < x +TILESIZE)
+		while (i < x + TS)
 		{
-			pos = ((j - y) * TILESIZE + (i - x));
-			if (((tex.addr[pos] >> 24) & 0xFF) == 0x00)//
+			pos = ((j - y) * TS + (i - x));
+			if (((tex.addr[pos] >> 24) & 0xFF) == 0x00)
 				my_mlx_pixel_put(img, i, j, tex.addr[pos]);
 			i++;
 		}
@@ -42,23 +42,17 @@ void	draw_square(t_data *img, int x, int y, t_tex tex)
 	}
 }
 
-void	draw_bg(t_param *param)
+void	draw_element(t_param *param, char c, int i, int j)
 {
-	int	i;
-	int	j;
-
-    i = 0;
-	while (param->map[i])
-	{
-		j = 0;
-		while (param->map[i][j])
-		{
-			if (param->map[i][j] != '0' && param->map[i][j] != '1')
-				draw_square(&param->img, j * TILESIZE, i * TILESIZE, param->zero_tex);
-			j++;
-		}
-		i++;
-	}
+	draw_square(&param->img, j * TS, i * TS, param->zero_tex);
+	if (c == '1')
+		draw_square(&param->img, j * TS, i * TS, param->one_tex);
+	else if (c == 'P')
+		draw_square(&param->img, j * TS, i * TS, param->p_tex);
+	else if (c == 'E')
+		draw_square(&param->img, j * TS, i * TS, param->e_tex);
+	else if (c == 'C')
+		draw_square(&param->img, j * TS, i * TS, param->c_tex);
 }
 
 void	draw_map(t_param *param)
@@ -72,20 +66,7 @@ void	draw_map(t_param *param)
 		j = 0;
 		while (param->map[i][j])
 		{
-			if (param->map[i][j] == '0')
-				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->zero_tex);
-			else if (param->map[i][j] == '1')
-				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->one_tex);
-			else 
-			{
-				draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->zero_tex);
-				if (param->map[i][j] == 'P')
-					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->p_tex);
-				else if (param->map[i][j] == 'E')
-					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->e_tex);
-				else if (param->map[i][j] == 'C')
-					draw_square(&param->img , j * TILESIZE, i * TILESIZE, param->c_tex);
-			}
+			draw_element(param, param->map[i][j], i, j);
 			j++;
 		}
 		i++;

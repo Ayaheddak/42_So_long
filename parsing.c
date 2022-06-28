@@ -6,116 +6,12 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:10:31 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/26 14:20:46 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 04:54:57 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	my_putstr(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-	{
-		write (1, &s[i], 1);
-		i++;
-	}
-	return (1);
-}
-int	check_elem(t_param *param)
-{
-	int	i;
-	int	j;
-	int	c_pyr;
-	int	c_em_s;
-	int	c_wall;
-	int	c_exit;
-	
-	i = 0;
-	c_pyr = 0;
-	param->colcount = 0;
-	c_em_s = 0;
-	c_wall = 0;
-	c_exit = 0;
-	while (param->map[i])
-	{
-		j = 0;
-		while (param->map[i][j])
-		{
-			if (param->map[i][j] == 'P')
-				c_pyr++;
-			else if (param->map[i][j] == 'C')
-				param->colcount++;
-			else if (param->map[i][j] == 'E')
-				c_exit++;
-			else if (param->map[i][j] != '1' && param->map[i][j] != '0')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	if (c_exit == 0 || param->colcount == 0 || c_pyr != 1)
-		return (1);
-	return (0);
-}
-
-int	check_wall(t_param *param)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (param->map[i])
-	{
-		j = 0;
-		while (param->map[i][j])
-		{
-			if (param->map[0][j] != '1')
-				return (1);
-			else if ((param->map[i + 1] == NULL && param->map[i][j] != '1'))
-				return (1);
-			else if (param->map[i][0] != '1')
-				return (1);
-			else if (param->map[i][j + 1] == '\0' && param->map[i][j] != '1')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-// int	get_rect(char **map, int nb)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	w;
-// 	int	tmp;
-
-// 	i = 0;
-// 	tmp = 0;
-// 	while (map[i])
-// 	{
-// 		j = 0;
-// 		while (map[i][j])
-// 			j++;
-// 		tmp = j;
-// 		if (i == 0)
-// 			w = j;
-// 		if (w != tmp)
-// 			return (1); 
-// 		i++;
-// 	}
-// 	if (nb == 1)
-// 		return (i);
-// 	else if (nb == 2)
-// 		return (w);
-// 	else
-// 		return (0);
-// }
 int	get_rect(t_param *param)
 {
 	int	i;
@@ -140,12 +36,6 @@ int	get_rect(t_param *param)
 	param->height = i;
 	param->width = tmp;
 	return (0);
-}
-
-int	ft_error(char *str)
-{
-	my_putstr(str);
-	exit(1);
 }
 
 int	check_extension(char *s1, const char *s2)
@@ -182,10 +72,12 @@ size_t	get_size(int fd, char *av)
 	while (str != NULL)
 	{
 		if (*str == '\n')
-			ft_error("Error 2\n");
+			ft_error("Error : there's an error in the map\n");
 		len += ft_strlen(str);
+		free(str);
 		str = get_next_line(fd);
 	}
+	free(str);
 	return (len);
 }
 
@@ -205,24 +97,11 @@ char	*read_map(int fd, char *av)
 	return (map);
 }
 
-// char	**get_map(t_param *param)
-// {
-// 	param->map = ft_split(param->str, '\n');
-// 	if (check_elem(param->map, param) != 0 || check_wall(param->map) != 0 || get_rect(param) != 0)
-// 		ft_error("Error 1\n");
-// 	return (NULL);
-// }
-// void	get_map(t_param *param)
-// {
-// 	param->map = ft_split(param->str, '\n');
-// 	if (check_elem(param->map, param) != 0 || check_wall(param->map) != 0 || get_rect(param) != 0)
-// 		ft_error("Error 1\n");
-// 	//return (NULL);
-// }
 void	get_map(t_param *param)
 {
-
-	param->map= ft_split(param->str, '\n');
-	if (check_elem(param) != 0 || check_wall(param) != 0 || get_rect(param) != 0)
-		ft_error("Error \n");
+	param->map = ft_split(param->str, '\n');
+	if (check_elem(param) != 0 || check_wall(param) != 0
+		|| get_rect(param) != 0)
+		ft_error("Error : there's an error in the map\n");
+	pos_plyr(param);
 }
