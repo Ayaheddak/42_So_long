@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 04:53:44 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 04:56:42 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 05:29:04 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	element_counter(t_param *param, t_norm *norm, char c)
 		param->colcount++;
 	else if (c == 'E')
 		norm->c_exit++;
+	else if (c == 'H' || c == 'V')
+		param->enemycount++;
 	else if (c != '1' && c != '0')
 		ft_error("Error : there's an error in the map\n");
 }
@@ -33,6 +35,7 @@ int	check_elem(t_param *param)
 	i = 0;
 	norm.c_pyr = 0;
 	param->colcount = 0;
+	param->enemycount = 0;
 	norm.c_em_s = 0;
 	norm.c_wall = 0;
 	norm.c_exit = 0;

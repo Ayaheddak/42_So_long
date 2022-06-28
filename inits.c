@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 04:29:32 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 04:31:42 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 07:07:29 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	init_textures(t_param *params)
 	get_image_file(params, "tex/e.xpm", &params->e_tex);
 	get_image_file(params, "tex/c.xpm", &params->c_tex);
 	get_image_file(params, "tex/p.xpm", &params->p_tex);
+	get_image_file(params, "tex/grass.xpm", &params->v_tex);
+	get_image_file(params, "tex/grass.xpm", &params->h_tex);
 }
 
 void	init_window(t_param *param)
@@ -53,6 +55,37 @@ void	init_map(t_param *param, char	**av)
 	param->player = malloc (sizeof(t_plyr));
 	param->str = read_map(fd, av[1]);
 	get_map(param);
+	if (param->enemycount > 0)
+		init_enemies(param);
 	free(param->str);
 	close(fd);
+}
+
+void	init_enemies(t_param *param)
+{
+	int	i;
+	int	j;
+	int	index;
+
+	index = 0;
+	i = index;
+	param->move_timer = 0;
+	param->enemies = malloc (sizeof(t_enemy) * param->enemycount);
+	while (param->map[i])
+	{
+		j = 0;
+		while (param->map[i][j])
+		{
+			if (param->map[i][j] == 'H' || param->map[i][j] == 'V')
+			{
+				param->enemies[index].dir = 1;
+				param->enemies[index].xpos = j;
+				param->enemies[index].ypos = i;
+				param->enemies[index].type = param->map[i][j];
+				index++;
+			}
+			j++;
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:50:33 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 03:22:28 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 05:45:13 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	key_pressed(int key, t_param *param)
 		ft_move_ply_right(param);
 	else
 		return (0);
-	param->player->move++;
-	printf ("move -->%d\n", param->player->move);
 	return (0);
 }
 

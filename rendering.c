@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:36:51 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 04:38:57 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 05:35:09 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	draw_square(t_data *img, int x, int y, t_tex tex)
 		while (i < x + TS)
 		{
 			pos = ((j - y) * TS + (i - x));
-			if (((tex.addr[pos] >> 24) & 0xFF) == 0x00)
+			if (((tex.addr[pos] >> 24) & 0xFF) == 0)
 				my_mlx_pixel_put(img, i, j, tex.addr[pos]);
 			i++;
 		}
@@ -53,6 +53,10 @@ void	draw_element(t_param *param, char c, int i, int j)
 		draw_square(&param->img, j * TS, i * TS, param->e_tex);
 	else if (c == 'C')
 		draw_square(&param->img, j * TS, i * TS, param->c_tex);
+	else if (c == 'H')
+		draw_square(&param->img, j * TS, i * TS, param->h_tex);
+	else if (c == 'V')
+		draw_square(&param->img, j * TS, i * TS, param->v_tex);
 }
 
 void	draw_map(t_param *param)

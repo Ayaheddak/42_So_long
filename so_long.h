@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 04:55:32 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 07:00:17 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@
 # define    DOWNBUTTON 1
 # define    LEFTBUTTON 0
 # define    RIGHTBUTTON 2
+# define    MOVETIMER 30
 
-// typedef enum e_dirs
-// {
-// 	UP,
-// 	DOWN,
-// 	LEFT,
-// 	RIGHT,
-// 	DEFAULT,
-// }	t_dirs;
 typedef struct s_norm
 {
 	int	c_pyr;
@@ -49,6 +42,14 @@ typedef struct s_plyr
 	int	ypos;
 	int	move;
 }				t_plyr;
+
+typedef struct s_enemy
+{
+	int		xpos;
+	int		ypos;
+	int		dir;
+	char	type;
+}				t_enemy;
 
 typedef struct s_tex
 {
@@ -78,13 +79,18 @@ typedef struct s_param
 	t_tex	c_tex;
 	t_tex	e_tex;
 	t_tex	p_tex;
+	t_tex	h_tex;
+	t_tex	v_tex;
 	t_data	img;
 	t_plyr	*player;
+	t_enemy	*enemies;
+	int		enemycount;
 	char	*str;
 	char	**map;
 	int		height;
 	int		width;
 	int		colcount;
+	int		move_timer;
 }		t_param;
 
 char	**ft_split(char const *s, char c);
@@ -113,4 +119,6 @@ void	init_textures(t_param *params);
 int		ft_error(char *str);
 int		check_wall(t_param *param);
 int		check_elem(t_param *param);
+void	init_enemies(t_param *param);
+char	*ft_itoa(int n);
 #endif
