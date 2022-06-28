@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 04:29:32 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 07:07:29 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/28 07:26:57 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	init_textures(t_param *params)
 	get_image_file(params, "tex/e.xpm", &params->e_tex);
 	get_image_file(params, "tex/c.xpm", &params->c_tex);
 	get_image_file(params, "tex/p.xpm", &params->p_tex);
-	get_image_file(params, "tex/grass.xpm", &params->v_tex);
-	get_image_file(params, "tex/grass.xpm", &params->h_tex);
+	get_image_file(params, "tex/v.xpm", &params->v_tex);
+	get_image_file(params, "tex/h.xpm", &params->h_tex);
 }
 
 void	init_window(t_param *param)
