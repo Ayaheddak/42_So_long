@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 04:57:18 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 07:00:17 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/30 04:52:33 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define    DOWNBUTTON 1
 # define    LEFTBUTTON 0
 # define    RIGHTBUTTON 2
-# define    MOVETIMER 30
+# define    MOVETIMER 24
 
 typedef struct s_norm
 {

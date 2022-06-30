@@ -6,7 +6,7 @@
 /*   By: aheddak <aheddak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 22:00:44 by aheddak           #+#    #+#             */
-/*   Updated: 2022/06/28 07:03:07 by aheddak          ###   ########.fr       */
+/*   Updated: 2022/06/30 04:46:21 by aheddak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,19 @@ void	horizontal_enemy(t_param *param, int index)
 
 void	move_enemies(t_param *param)
 {
-	int	i;
+	int	index;
 
 	param->move_timer--;
 	if (param->enemycount <= 0 || param->move_timer > 0)
 		return ;
-	i = 0;
-	while (i < param->enemycount)
+	index = 0;
+	while (index < param->enemycount)
 	{
-		if (param->enemies[i].type == 'H')
-			horizontal_enemy(param, i);
-		if (param->enemies[i].type == 'V')
-			vertical_enemy(param, i);
-		i++;
+		if (param->enemies[index].type == 'H')
+			horizontal_enemy(param, index);
+		if (param->enemies[index].type == 'V')
+			vertical_enemy(param, index);
+		index++;
 	}
 	param->move_timer = MOVETIMER;
 }
